@@ -9,9 +9,18 @@
 	"runArgs": [
 		"--name=ubuntu22.04-dev"
 	],
-	// "mounts": [
-	// 	"source=${localWorkspaceFolder}/../devContainerSamples,target=${containerWorkspaceFolder}"
-	// ],
+	// 성공
+	// "workspaceMount": "source=/home/hyunsu00/github/hyunsu00/devContainer/devContainerSamples/ubuntu22.04-dev,target=/workspace,type=bind",
+	// "workspaceFolder": "/workspace",
+	// 성공
+	// "workspaceMount": "source=/home/hyunsu00/github/hyunsu00/devContainer,target=/workspace,type=bind",
+	// "workspaceFolder": "/workspace/devContainerSamples/ubuntu22.04-dev",
+	// 성공
+	// "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+	// "workspaceFolder": "/workspace",
+	"workspaceMount": "source=${localWorkspaceFolder}/../../../devContainer,target=/workspace,type=bind",
+	"workspaceFolder": "/workspace/devContainerSamples/ubuntu22.04-dev",
+	
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -22,7 +31,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-vscode.cpptools-extension-pack",
+				"ms-vscode.cpptools-extension-pack"
 			]
 		}
 	}
