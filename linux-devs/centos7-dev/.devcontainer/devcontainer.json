@@ -1,5 +1,10 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+// $ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=$(whoami) \
+// -t centos7-dev:latest -f -f ./Dockerfile .
+// $ docker run -itd --privileged=true --name centos7-dev \
+// -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+// centos7-dev:latest /sbin/init
 {
 	"image": "centos-dev:7",
 	"name": "centos7-dev",
@@ -7,7 +12,9 @@
 		"dockerfile": "Dockerfile"
 	},
 	"runArgs": [
-		"--name=centos7-dev"
+		"--name=centos7-dev",
+		"--volume=/etc/localtime:/etc/localtime:ro",
+		"--env=TZ=Asia/Seoul"
 	],
 	// "mounts": [
 	// 	"source=${localWorkspaceFolder}/../devContainerSamples,target=${containerWorkspaceFolder}"
