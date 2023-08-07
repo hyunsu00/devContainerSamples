@@ -1,0 +1,72 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Echo ${workspaceFolder}",
+            "type": "shell",
+            "command": "echo ${workspaceFolder}"
+        },
+        {
+            "label": "Echo Process ID",
+            "type": "shell",
+            "command": "echo ${input:processID}",
+            "problemMatcher": []
+        },
+        {
+            "label": "Echo $(id -u)",
+            "type": "shell",
+            "command": "echo ${input:getUID}"
+        },
+        {
+            "label": "Echo $(id -g)",
+            "type": "shell",
+            "command": "echo ${input:getGID}"
+        },
+        {
+            "label": "Echo $(whoami)",
+            "type": "shell",
+            "command": "echo ${input:getUNAME}"
+        },
+    ],
+    "inputs": [
+        {
+            "id": "processID",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "ps axww --no-headers k comm -o '%p|%c|%p|%a' | sed -e 's/^\\s*//' -e 's/\\s*|\\s*/|/g'",
+                "fieldSeparator": "|",
+                "description": "Select the process to attach to"
+            }
+        },
+        {
+            "id": "getUID",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "id -u",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "getGID",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "id -g",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "getUNAME",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "whoami",
+                "useFirstResult": true
+            }
+        }
+    ]
+}

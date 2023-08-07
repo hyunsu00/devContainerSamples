@@ -1,38 +1,59 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/cpp
 // $ docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=$(whoami) \
-// -t centos7-dev:latest -f -f ./Dockerfile .
+// -t centos-dev:7 -f ./Dockerfile .
 // $ docker run -itd --privileged=true --name centos7-dev \
 // -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
-// centos7-dev:latest /sbin/init
+// centos-dev:7 /sbin/init
 {
 	"image": "centos-dev:7",
 	"name": "centos7-dev",
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"args": {
+			"UNAME": "vscode"
+		}
 	},
 	"runArgs": [
 		"--name=centos7-dev",
 		"--volume=/etc/localtime:/etc/localtime:ro",
 		"--env=TZ=Asia/Seoul"
 	],
-	// "mounts": [
-	// 	"source=${localWorkspaceFolder}/../devContainerSamples,target=${containerWorkspaceFolder}"
-	// ],
-	// Features to add to the dev container. More info: https://containers.dev/features.
+
+	// VS Code가 종료된 후에도 컨테이너를 계속 실행
+	// 디폴트 : "stopContainer"
+	// "shutdownAction":"none",
+
+	// 시스템의 모든 장치에 접근할 수 있으며 커널의 기능을 대부분 사용 설정
+	// 디폴트 : false
+	"privileged": true,
+
+	// containerUser또는 remoteUser이 지정된 경우 사용자의 UID/GID는 
+	// 로컬 사용자의 UID/GID와 일치하도록 업데이트되어 바인드 마운트의 권한 문제를 방지
+	// 디폴트 : true
+	"updateRemoteUserUID": true,
+
+	// VS Code로 접속시 로그인 유저(https://aka.ms/dev-containers-non-root)
+	"remoteUser": "vscode",
+
+	// 컨테이너 접속시 로그인 유저 (ex)docker exec -it ~  bash 로 접속시)
+	"containerUser": "vscode",
+
+	// 개발 컨테이너에 추가할 기능(https://containers.dev/features)
 	// "features": {},
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+
+	// 'forwardPorts'를 사용하여 컨테이너 내부의 포트 목록을 로컬에서 사용할 수 있도록 함
 	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
+
+	// 컨테이너가 생성된 후 'postCreateCommand'를 사용하여 명령 실행.
 	// "postCreateCommand": "gcc -v",
-	// Configure tool-specific properties.
+
+	// 도구별 속성 구성.
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-vscode.cpptools-extension-pack",
+				"ms-vscode.cpptools-extension-pack"
 			]
 		}
 	}
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
 }
