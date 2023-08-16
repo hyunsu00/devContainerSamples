@@ -37,21 +37,21 @@ ENV LANG ko_KR.utf8
 # 유저 생성
 #
 # 빌드시점 UNAME, UID, GID 설정
-# ARG UNAME=devUser
-# ARG UID=1000
-# ARG GID=$UID
+ARG UNAME=devUser
+ARG UID=1000
+ARG GID=$UID
 
 # # 유저 생성
-# RUN groupadd --gid $GID $UNAME \
-#     && useradd --uid $UID --gid $GID -m $UNAME \
-#     && echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME \
-#     && chmod 0440 /etc/sudoers.d/$UNAME
-
+RUN groupadd --gid $GID $UNAME \
+    && useradd --uid $UID --gid $GID -m $UNAME \
+    && echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME \
+    && chmod 0440 /etc/sudoers.d/$UNAME
+s
 # # 작업디렉토리설정
-# WORKDIR /home/$UNAME
+WORKDIR /home/$UNAME
 
 # # 기본 사용자 설정
-# USER $UNAME
+USER $UNAME
 
 # cgroup : systemctl 권한 획득
 VOLUME ["/sys/fs/cgroup"]

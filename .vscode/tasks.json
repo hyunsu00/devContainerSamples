@@ -9,9 +9,9 @@
             "command": "docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=$(whoami) -t centos7-dev:latest -f ${workspaceFolder}/linux-devs/centos7-dev/.devcontainer/Dockerfile ."
         },
         {
-            "label": "run centos7-dev",
+            "label": "run root centos7-dev",
             "type": "shell",
-            "command": "docker run -itd --privileged=true --name centos7-dev -v ${workspaceFolder}:/home/$(whoami)/devContainerSamples centos7-dev:latest /sbin/init"
-        },
+            "command": "docker run -d --privileged=true --user root --name centos7-dev -v ${workspaceFolder}:/home/$(whoami)/devContainerSamples centos7-dev:latest"
+        }
     ]
 }
