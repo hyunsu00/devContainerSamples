@@ -1,0 +1,17 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build centos7-dev",
+            "type": "shell",
+            "command": "docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=$(whoami) -t centos7-dev:latest -f ${workspaceFolder}/linux-devs/centos7-dev/.devcontainer/Dockerfile ."
+        },
+        {
+            "label": "run centos7-dev",
+            "type": "shell",
+            "command": "docker run -itd --privileged=true --name centos7-dev -v ${workspaceFolder}:/home/$(whoami)/devContainerSamples centos7-dev:latest /sbin/init"
+        },
+    ]
+}

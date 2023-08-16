@@ -1,14 +1,14 @@
 FROM centos:7
 
 # 패키지 업데이트 및 sudo 지원 추가
-RUN yum update -y && yum clean all && yum install -y sudo
+RUN yum update -y && yum clean all && yum install sudo -y
 
 
 # # ARG REINSTALL_CMAKE_VERSION_FROM_SOURCE="none"P
 # ARG REINSTALL_CMAKE_VERSION_FROM_SOURCE="3.22.2"
 
 # # Optionally install the cmake for vcpkg
-COPY ./reinstall-cmake.sh /tmp/
+# COPY ./reinstall-cmake.sh /tmp
 
 # RUN if [ "${REINSTALL_CMAKE_VERSION_FROM_SOURCE}" != "none" ]; then \
 #         chmod +x /tmp/reinstall-cmake.sh && /tmp/reinstall-cmake.sh ${REINSTALL_CMAKE_VERSION_FROM_SOURCE}; \
@@ -37,15 +37,22 @@ ENV LANG ko_KR.utf8
 # 유저 생성
 #
 # 빌드시점 UNAME, UID, GID 설정
-ARG UNAME=devUser
-ARG UID=1000
-ARG GID=$UID
-# 유저 생성
-RUN groupadd --gid $GID $UNAME \
-    && useradd --uid $UID --gid $GID -m $UNAME \
-    && echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME \
-    && chmod 0440 /etc/sudoers.d/$UNAME
-# 작업디렉토리설정
-WORKDIR /home/$UNAME
-# 유저로 로그인
-USER $UNAME
+# ARG UNAME=devUser
+# ARG UID=1000
+# ARG GID=$UID
+
+# # 유저 생성
+# RUN groupadd --gid $GID $UNAME \
+#     && useradd --uid $UID --gid $GID -m $UNAME \
+#     && echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME \
+#     && chmod 0440 /etc/sudoers.d/$UNAME
+
+# # 작업디렉토리설정
+# WORKDIR /home/$UNAME
+
+# # 기본 사용자 설정
+# USER $UNAME
+
+# cgroup : systemctl 권한 획득
+VOLUME ["/sys/fs/cgroup"]
+CMD ["/usr/sbin/init"]
